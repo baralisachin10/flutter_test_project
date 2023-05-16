@@ -25,6 +25,9 @@ class _StudentAddState extends State<StudentAdd> {
 
   //function to submit data
   void submitHandler() {
+    if (formKey.currentState!.validate()) {
+      return null;
+    }
     Students std = Students(
       name: nameController.text,
       email: emailController.text,
@@ -41,6 +44,7 @@ class _StudentAddState extends State<StudentAdd> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Student'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -145,13 +149,24 @@ class _StudentAddState extends State<StudentAdd> {
               const SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    submitHandler();
-                  }
-                },
-                child: const Text('Submit'),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: submitHandler,
+                    child: const Text('Add Student'),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/studentDetails');
+                    },
+                    child: const Text('View Students'),
+                  ),
+                ],
               ),
             ]),
           ),
